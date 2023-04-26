@@ -1,0 +1,31 @@
+{% load static %}
+{% load google_translate %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+  </head>
+  <body>
+    <div class='right'>{% google_translate type='vertical' language='ja' %}</div>
+    <h2 class='top'><a href="{% url 'index' %}">食べナビ</a></h2>
+    <div class="box">
+      <h1>メンバー登録</h1> 
+      <form method="POST">
+        {% csrf_token %}
+        <div>
+          <p><label for="id_username">ユーザー名:</label> <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username"></p>
+          <p><label for="id_password1">パスワード:</label> <input type="password" name="password1" autocomplete="new-password" required id="id_password1"></p>
+          <p><label for="id_password2">パスワード(確認用):</label> <input type="password" name="password2" autocomplete="new-password" required id="id_password2"></p>
+        </div>
+        <div>
+          <button type="submit" class = "btn">登録</button>
+        </div>
+      </form>
+    </div>
+    <p class="lgn">すでにアカウントを持っている方は<a href="{% url 'login' %}"><button class = "btn">こちら</button></a></p>
+  </body>
+</html>

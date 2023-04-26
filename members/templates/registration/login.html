@@ -1,0 +1,32 @@
+{% load static %}
+{% load google_translate %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+  </head>
+  <body>
+    <div>
+      <div class='right'>{% google_translate type='vertical' language='ja' %}</div>
+      <h2 class='top'><a href="{% url 'index' %}">食べナビ</a></h2>
+      <div class="box">
+        <h1>ログイン</h1> 
+        <form method="POST">
+          {% csrf_token %}
+          <div>
+            <p><label for="id_username">ユーザー名:</label> <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username"></p>
+            <p><label for="id_password">パスワード:</label> <input type="password" name="password" autocomplete="current-password" required id="id_password"></p>
+          </div>
+          <div>
+            <button type="submit" class = "btn">ログイン</button>
+          </div>
+        </form>
+      </div>
+      <p class="lgn">アカウントを持ってない方は<a href="{% url 'register' %}"><button class = "btn">こちら</button></a></p>
+    </div>
+  </body>
+</html>

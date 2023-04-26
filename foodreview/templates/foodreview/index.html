@@ -1,0 +1,42 @@
+{% load google_translate %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>tabenavi</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+  </head>
+  <body>
+    <h2 class='top'><a href="{% url 'index' %}">食べナビ</a></h2>
+    <div class="sidebar">
+      <ul>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'create' %}">メニューを投稿</a></li>
+          <li><a href="{% url 'map' %}">地図</a></li>
+          <li><a href="{% url 'logout' %}">ログアウト</a></li>
+          <li>{% google_translate type='vertical' language='ja' %}</li>
+        {% else %}
+          <li><a href="{% url 'map' %}">地図</a></li>
+          <li><a href="{% url 'login' %}">ログイン</a></li>
+          <li><a href="{% url 'register' %}">メンバー登録</a></li>
+          <li>{% google_translate type='vertical' language='ja' %}</li>
+        {% endif %}
+      </ul>
+    </div>
+    <div class = "content">
+      <hr>
+      {% if menus %}
+      {% for menu in menus %}
+      <a href="{% url 'detail' menu.id %}"><img src="{{ menu.image.url }}" width="220px"><br>{{ menu.menu }}</a>
+      
+      <hr>
+      {% endfor %}
+      {% else %}
+      <p>No menu.</p>
+      {% endif %}
+    </div>
+    <a href="#" id="top">Top</a>
+  </body>
+</html>

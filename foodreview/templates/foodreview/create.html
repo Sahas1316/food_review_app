@@ -1,0 +1,51 @@
+{% load google_translate %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>tabenavi-create</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+  </head>
+  <body>
+    <div class='right'>{% google_translate type='vertical' language='ja' %}</div>
+    <h2 class='top'><a href="{% url 'index' %}">食べナビ</a></h2>
+    <div class="box">
+      {% if user.is_authenticated %}
+        <h2>メニューを投稿</h2>
+        <form action="{% url 'create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div>
+            <label for="titleInput">メニュー・お店の名前</label>
+            <input id="titleInput" name="menu" type="text" placeholder="メニューを入力できます...">
+          </div>
+          <div>
+            <label for="price">値段　　　　　　　　</label>
+            <input id="price" name="price" type="number" placeholder="値段を入力して下さい...">
+            <span>円</span>
+          </div>
+          <div>
+            <p>感想・レビュー</p>
+            <label for="textInput"></label>
+            <textarea id="textInput" name="description" rows="15" cols="50" placeholder="感想やレビューなど自由にお書きください..."></textarea>
+          </div>
+          <div>
+            <label for="img">写真の投稿</label>
+            <input type="file" id="img" name="img" accept="image/*">
+          </div>
+          <hr>
+          <div>
+            <button type="submit" class = "btn">投稿</button>
+          </div>
+        </form>
+      {% else %}
+        <p>ログインしていません！！</p>
+        <a href="{% url 'login' %}"><button class = "btn">ログイン</button></a>
+      {% endif %}
+    </div>
+    
+  </body>
+  
+</html>

@@ -1,0 +1,75 @@
+{% load google_translate %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>{{ menu.menu }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+  </head>
+  <body>
+    <h2 class='top'><a href="{% url 'index' %}">食べナビ</a></h2>
+    <div class="sidebar">
+      <ul>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'create' %}">メニューを投稿</a></li>
+          <li><a href="{% url 'map' %}">地図</a></li>
+          <li><a href="{% url 'edit' menu.id %}">編集</a></li>
+          <li><a href="{% url 'delete' menu.id %}">削除</a></li>
+          <li><a href="{% url 'logout' %}">ログアウト</a></li>
+          <li>{% google_translate type='vertical' language='ja' %}</li>
+        {% else %}
+          <li><a href="{% url 'map' %}">地図</a></li>
+          <li><a href="{% url 'login' %}">ログイン</a></li>
+          <li><a href="{% url 'register' %}">メンバー登録</a></li>
+          <li>{% google_translate type='vertical' language='ja' %}</li>
+        {% endif %}
+      </ul>
+    </div>
+    <h3>{{ menu.menu }}</h3>
+    <div class="image"><img src="{{ menu.image.url }}" width="620px">
+      <p>{{ menu.description|linebreaksbr }}</p>
+      <span>値段：</span>
+      <span>{{ menu.price }}円</span>
+      <br>
+      <a href="{% url 'like' menu.id %}">
+        <i>Like</i>
+        {{ menu.like }}
+      </a>
+      <hr>
+      <div class = "box1">
+        <h4>コメント</h4>
+        <form action="{% url 'detail' menu.id %}" method = "POST">
+          {% csrf_token %}
+          <div>
+            <label for="textInput"></label>
+            <textarea id="textInput" name="text" rows="2" cols="70" placeholder="コメントを入力して下さい..."></textarea>
+          </div>
+          <div>
+            <button type="submit" class = "btn">投稿</button>
+          </div>
+        </form>
+      </div>
+      <hr>
+      {% if comments %}
+      {% for comment in comments %}
+      <div class="comments">
+        <div>
+          <small>[{{ comment.posted_at }}]</small>
+        </div>
+        <div>
+          {{ comment.text | linebreaksbr }}
+        </div>
+      </div>
+      <hr>
+      {% endfor %}
+      {% else %}
+      <p>No comment.</p>
+      {% endif %}
+    </div>
+    <a href="#" id="top">Top</a>
+  </body>
+  
+</html>

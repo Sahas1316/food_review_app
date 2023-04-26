@@ -1,0 +1,18 @@
+{% load gmapify %}
+{% load static %}
+{% load google_translate %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>tabenavi-map</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+    <link rel="stylesheet" href="{% static 'style2.css' %}">
+  </head>
+  <body>
+    <div class='right'>{% google_translate type='vertical' language='ja' %}</div>
+    <h2 class='top'><a href="{% url 'index' %}">食べナビ</a></h2>
+    <div id="map-canvas" style="width:1200px;height:500px;"></div>
+    {% gmapify "map-canvas" 35.78055255289845 139.71564953938656 zoom=18 marker_title="INIAD" %}
+  </body>
